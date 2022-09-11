@@ -1,13 +1,12 @@
 node{
-   stage('SCM Checkout'){
+   stage('Cloning GIT Repository'){
      git 'https://github.com/Abijit1991/demodevopsproject.git'
    }
-   stage('Compile-Package'){
-
-      def mvnHome =  tool name: 'maven3', type: 'maven'   
-      sh "${mvnHome}/bin/mvn clean package"
-	  sh 'mv target/myweb*.war target/newapp.war'
-   }
+   stage('Compiling Package') {
+        def mnvHome = tool name: 'maven3', type: 'maven'
+        sh "${mnvHome}/bin/mvn clean package"
+        sh "mv target/myweb*.war target/newapp.war"
+    }
    stage('SonarQube Analysis') {
 	        def mvnHome =  tool name: 'maven3', type: 'maven'
 	        withSonarQubeEnv('sonar') { 
